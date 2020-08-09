@@ -17,7 +17,13 @@ function validateListId(req,res,next){
     next();
 }
 
-
+function validateName(req,res,next){
+    const {name,lastName}=req.body;
+    if(!name||!lastName){
+        return res.status(400).json({erro:"All the fields must be filled"})
+    }
+    next();
+};
 
 
 app.use("/devoloper/:id",validateListId);
@@ -26,7 +32,7 @@ app.get("/devoloper",(req,res)=>{
     return res.json(lists);
 })
 
-app.post("/devoloper",(req,res)=>{
+app.post("/devoloper",validateName,(req,res)=>{
     const id = uuid();
     const {name,lastName,years,company,technologies}=req.body;
 
@@ -40,7 +46,7 @@ app.post("/devoloper",(req,res)=>{
 
 })
 
-app.put("/devoloper/:id",(req,res)=>{
+app.put("/devoloper/:id",validateName,(req,res)=>{
     const {id} =req.params;
 
     const {name,lastName,years,company,technologies}= req.body;
