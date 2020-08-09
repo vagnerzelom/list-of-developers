@@ -7,6 +7,9 @@ app.use(express.json());
 
 const list=[];
 
+app.get("/devoloper",(req,res)=>{
+    return res.json(list);
+})
 
 
 
