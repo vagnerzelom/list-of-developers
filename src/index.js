@@ -9,7 +9,18 @@ let lists={
     devoloper:[]
 };
 
+function validateListId(req,res,next){
+    const{id}=req.params;
+    if(!isUuid(id)){
+        return res.status(400).json({error:"param sent is not a valit"})
+    }
+    next();
+}
 
+
+
+
+app.use("/devoloper/:id",validateListId);
 
 app.get("/devoloper",(req,res)=>{
     return res.json(lists);
