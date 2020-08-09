@@ -9,6 +9,8 @@ let lists={
     devoloper:[]
 };
 
+
+
 app.get("/devoloper",(req,res)=>{
     return res.json(lists);
 })
@@ -42,6 +44,23 @@ app.put("/devoloper/:id",(req,res)=>{
      lists.devoloper[listIndex]=list;
 
      return res.json(list);
+    
+})
+
+app.delete("/devoloper/:id",(req,res)=>{
+    const {id} =req.params;
+
+    const {name,lastName,years,company,technologies}= req.body;
+
+    const listIndex = lists.devoloper.findIndex((list)=>list.id == id);
+
+    if(listIndex < 0){
+        return res.status(400).json({ERROR:"this programmer does not exist"});
+        }
+          
+     lists.devoloper.splice(listIndex,1);
+
+     return res.status(204).send();
     
 })
 
